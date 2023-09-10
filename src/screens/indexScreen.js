@@ -1,30 +1,31 @@
 import { useContext } from "react";
-import { View, Text, Stylesheet } from "react-native";
+import { View, Text, Stylesheet, Button } from "react-native";
 import BlogContext from "../contexts/BlogContext";
 import { FlatList } from "react-native";
 
 const indexScreen = () => {
-  const blogs = useContext(BlogContext);
+  const data = useContext(BlogContext);
+
+  const blogPostsData = data?.data;
 
   const renderBlogPostList = () => {
     return (
       <FlatList
-        data={blogs}
+        data={blogPostsData}
         renderItem={(item) => {
-          console.log("AAAAAAAAAAAAAAAAAAAAAAAA", item);
-          return (
-            <Text>
-              {item.item.name}
-            </Text>
-          );
+          return <Text>{item.item}</Text>;
         }}
       />
     );
   };
 
+  const renderAddPostButton = () => {
+    return <Button title="Add blog" onPress={() => data.AddBlogPosts()} />;
+  };
+
   return (
     <View>
-      <Text>Index Screen</Text>
+      {renderAddPostButton()}
       <Text>{renderBlogPostList()}</Text>
     </View>
   );
