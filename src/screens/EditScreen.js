@@ -1,14 +1,19 @@
 import React, { useContext, useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import BlogContext from "../contexts/BlogContext";
 
-const CreateScreen = (props) => {
-  const { navigation } = props;
-
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
+const EditScreen = (props) => {
   const data = useContext(BlogContext);
+
+  const selectedBlogPost = data.data.find(
+    (blogPost) =>
+      blogPost.id === props.navigation.getParam("selectedBlogPostId")
+  );
+
+  const [title, setTitle] = useState(selectedBlogPost?.title);
+  const [content, setContent] = useState(selectedBlogPost?.content);
+
+  console.log("EEEEEEEEEEEEEEEEEdit page", title);
 
   return (
     <View>
@@ -22,11 +27,11 @@ const CreateScreen = (props) => {
       </View>
       <View>
         <Button
-          title="Add blog"
+          title="Edit blog"
           onPress={() => {
-            data.AddBlogPosts(title, content);
-            navigation.navigate("Index");
-          } }
+            data.editBlogPosts(title, content, selectedBlogPost.id);
+            props.navigation.navigate("Index");
+          }}
           color="blue"
         />
       </View>
@@ -49,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateScreen;
+export default EditScreen;

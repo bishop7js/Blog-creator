@@ -10,8 +10,6 @@ const ShowScreen = (props) => {
     (blogPost) => blogPost.id === props.navigation.getParam("blogPostId")
   );
 
-  console.log("SSSSSSSSSSSSSSSSSSelected", selectedBlogPost);
-
   return (
     <View style={styles.containerStyles}>
       <Text style={styles.headerStyles}>{selectedBlogPost.title}</Text>
@@ -23,7 +21,13 @@ const ShowScreen = (props) => {
 ShowScreen.navigationOptions = (props) => {
   return {
     headerRight: (
-      <TouchableOpacity onPress={() => console.log('go to edit screen')}>
+      <TouchableOpacity
+        onPress={() =>
+          props.navigation.navigate("edit", {
+            selectedBlogPostId: props.navigation.getParam("blogPostId"),
+          })
+        }
+      >
         <View style={{ marginRight: 20 }}>
           <Entypo name="edit" size={24} color="black" />
         </View>

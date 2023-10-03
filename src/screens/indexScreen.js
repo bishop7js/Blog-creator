@@ -13,28 +13,33 @@ const indexScreen = (props) => {
 
   const blogPostsData = data?.data;
 
-  console.log('DDDDDDDDDDDDDDDDDDDData', data?.data.length)
-
   const renderBlogPostList = () => {
     return (
       <FlatList
         data={blogPostsData}
         renderItem={(item) => {
           return (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("show", { blogPostId: item.item.id })
-              }
-            >
-              <View style={styles.blogListItem}>
-                <Text style={styles.textStyle}>{item.item.title}</Text>
-                <TouchableOpacity
-                  onPress={() => data.deleteBlogPosts(item.item.id)}
-                >
-                  <Icon name="trash" size={30} color="red" />
-                </TouchableOpacity>
-              </View>
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("show", { blogPostId: item.item.id })
+                }
+              >
+                <View style={styles.blogListItem}>
+                  <Text style={styles.textStyle}>{item.item.title}</Text>
+                  <TouchableOpacity
+                    onPress={() => data.deleteBlogPosts(item.item.id)}
+                  >
+                    <Icon
+                      style={{ marginLeft: 8 }}
+                      name="trash"
+                      size={30}
+                      color="red"
+                    />
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+            </View>
           );
         }}
       />
@@ -48,7 +53,9 @@ const indexScreen = (props) => {
   return (
     <View>
       {data?.data.length === 0 ? renderAddPostContent() : null}
-      <Text>{renderBlogPostList()}</Text>
+      <View>
+        <Text>{renderBlogPostList()}</Text>
+      </View>
     </View>
   );
 };
@@ -70,11 +77,12 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#AAFD91",
+    backgroundColor: "powderblue",
     padding: 10,
     marginBottom: 5,
     borderRadius: 5,
-    width: "100%",
+    marginTop: 16,
+    marginLeft: 16
   },
   textStyle: {
     fontSize: 20,
